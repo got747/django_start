@@ -3,5 +3,8 @@ __pycache__
 myvenv
 db.sqlite3
 .DS_Store
+<<<<<<< HEAD
 .idea/
-
+=======
+.idea
+>>>>>>> b1281d9e1acc0bdf2dbaef38692e3526c6f195b3
