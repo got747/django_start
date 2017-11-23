@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
 EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_HOST_USER = 'nikita.xabar@yandex.ru'
-EMAIL_HOST_PASSWORD = 'ujn747gvt98'
+EMAIL_HOST_USER = '*******'
+EMAIL_HOST_PASSWORD = '*****'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
