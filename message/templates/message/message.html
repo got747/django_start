@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% block message %}
+
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <form action="{% url 'message:logout' %}" method="post" class="form-inline my-2 my-lg-0">
+        {% csrf_token %}
+        <button class="btn" type="submit">log out</button>
+    </form>
+
+</nav>
+
+<div class="general-container">
+    <div class="container top-container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <form action="{% url  'message:message'  %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+
+
+                    <button type="submit" class="btn btn-secondary">Отправить</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
