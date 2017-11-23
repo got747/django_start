@@ -19,7 +19,7 @@ def send_message_return_status(message):
     """
     mail = EmailMessage(message.title_text, message.text, message.parent_username,
                         [message.recipient_email])
-    mail.content_subtype = "html"
+
     if mail.send(fail_silently=False):
         return Message.SENT
     else:
