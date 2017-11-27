@@ -5,7 +5,7 @@
         <div class="container top-container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form action="{% url 'authorize_registration:authorize' %}" id="login" method="post">
+                    <form action="{% url 'authorize_registration:authorize' %}" id="authorize" method="post">
                         {% csrf_token %}
 
                         <label for="username">Username</label>

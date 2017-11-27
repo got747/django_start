@@ -14,9 +14,7 @@ def logout(request):
 
 
 def send_message_return_status(message):
-    """
-    отправляет сообщение на эл. почту, возвращает статус отправки
-    """
+    """ Отправляет сообщение на эл. почту, возвращает статус отправки """
     mail = EmailMessage(message.title_text, message.text, message.parent_username,
                         [message.recipient_email])
 
@@ -27,29 +25,20 @@ def send_message_return_status(message):
 
 
 class MessageCreate(LoginRequiredMixin, generic.CreateView):
-    """
-    Отображает форму отправки, сохраняет сообщение в базу отправляет сообщение
-    """
+    """ Отображает форму отправки, сохраняет сообщение в базу отправляет сообщение """
     form_class = MessageForm
     template_name = 'message/message.html'
     success_url = '/message/'
 
     def dispatch(self, request, *args, **kwargs):
-        """
-        Допишет в self текущего пользователя
-        """
+        """ Допишет в self текущего пользователя """
         self.user = request.user
         return super(MessageCreate, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        """
-        заполняем недостоющие поля, вызавет send_message_return_status()
-        """
-
+        """ Заполнит недостоющие поля, вызавет send_message_return_status() """
         message = form.save(commit=False)
         message.parent_username = self.user
         message.status = send_message_return_status(message)
         message.save()
         return super(MessageCreate, self).form_valid(form)
-
-

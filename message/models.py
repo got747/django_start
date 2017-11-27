@@ -7,6 +7,7 @@ from django.db import models
 
 
 class Message(models.Model):
+
     SENT = 1
     NOT_SENT = 2
 
@@ -20,5 +21,5 @@ class Message(models.Model):
     title_text = models.CharField(max_length=100, blank=True)
     parent_username = models.ForeignKey('auth.User')
     created = models.DateTimeField(default=timezone.now)
-    status = models.SmallIntegerField(verbose_name='статус отправки', choices=AVAILABLE_CHOICES)
+    status = models.SmallIntegerField(verbose_name='статус отправки сообщения', choices=AVAILABLE_CHOICES)
 

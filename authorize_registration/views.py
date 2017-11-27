@@ -9,15 +9,10 @@ from django.views.decorators.csrf import csrf_protect
 
 @csrf_protect
 def registration_view(request):
-    """
-       регистрация и последующая авторизация
-    """
-
+    """ Регистрирует и авторизирует """
     if request.method == "POST":
-
         user_creation_form = UserCreationForm(QueryDict(request.POST.get('form')))
         if user_creation_form.is_valid():
-
             user_creation_form.save()
             new_user = auth.authenticate(username=user_creation_form.cleaned_data['username'],
                                          password=user_creation_form.cleaned_data['password2'])
@@ -26,22 +21,16 @@ def registration_view(request):
         else:
             return JsonResponse(
                 {'answer': 'bad', 'errors': 'Проверьте форму на правильность заполнения'})
-
     return render(request, 'authorize_registration/registration.html', {'form': UserCreationForm()})
 
 
 @csrf_protect
 def authorize_view(request):
-    """
-       авторизация пользователя
-    """
-
+    """ Авторизация пользователя """
     if request.method == 'POST':
-        get_login_form = QueryDict(request.POST.get('form'))
-
-        username = get_login_form.get('username')
-        password = get_login_form.get('password')
-
+        get_authorize_form = QueryDict(request.POST.get('form'))
+        username = get_authorize_form.get('username')
+        password = get_authorize_form.get('password')
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
