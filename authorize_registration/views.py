@@ -31,7 +31,7 @@ def registration_view(request):
 
 
 @csrf_protect
-def login_view(request):
+def authorize_view(request):
     """
        авторизация пользователя
     """
@@ -49,4 +49,4 @@ def login_view(request):
         else:
             return JsonResponse({'answer': 'bad', 'errors': 'Не верный  логин или пароль'})
     else:
-        return render(request, 'authorize_registration/login.html', {})
+        return render(request, 'authorize_registration/authorize.html', {})
