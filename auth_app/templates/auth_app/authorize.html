@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+{% block login %}
+ <div class="general-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <form action="{% url 'auth_app:authorize' %}" id="authorize" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+
+                    <div >
+                        <button class="btn btn-secondary " type="submit" >log ip</button>
+                         <a href="{% url 'auth_app:registration' %}" class="btn btn-secondary " >log up</a>
+                    </div>
+
+                    <div id="error"></div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+</div>
+    <script type="text/javascript" src="{% static 'auth_app/authorize_registration_ajax.js' %}"></script>
+{% endblock %}

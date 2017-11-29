@@ -28,11 +28,13 @@ DEBUG = True
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_HOST_USER = '*****'
-EMAIL_HOST_PASSWORD = '****'
+EMAIL_HOST_PASSWORD = '*****'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Application definition
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authorize_registration',
+    'auth_app',
     'message'
 ]
 
@@ -57,7 +59,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'django_start.urls'
 
-LOGIN_URL = '/authorize_registration/authorize/'
+LOGIN_URL = '/auth_app/authorize/'
 
 TEMPLATES = [
     {

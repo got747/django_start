@@ -1,5 +1,6 @@
 from django.contrib import auth
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.shortcuts import redirect
 from django.views import generic
@@ -10,18 +11,7 @@ from message.models import Message
 
 def logout(request):
     auth.logout(request)
-    return redirect('authorize_registration:authorize')
-
-
-def send_message_return_status(message):
-    """ Отправляет сообщение на эл. почту, возвращает статус отправки """
-    mail = EmailMessage(message.title_text, message.text, message.parent_username,
-                        [message.recipient_email])
-
-    if mail.send(fail_silently=False):
-        return Message.SENT
-    else:
-        return Message.NOT_SENT
+    return redirect('auth_app:authorize')
 
 
 class MessageCreate(LoginRequiredMixin, generic.CreateView):
@@ -32,13 +22,18 @@ class MessageCreate(LoginRequiredMixin, generic.CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         """ Допишет в self текущего пользователя """
-        self.user = request.user
+        self.user = User.objects.get(username=request.user)
         return super(MessageCreate, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        """ Заполнит недостоющие поля, вызавет send_message_return_status() """
+        """ Заполнит недостающие поля, и отправит сообщение на эл. почту """
         message = form.save(commit=False)
         message.parent_username = self.user
-        message.status = send_message_return_status(message)
+        mail = EmailMessage(message.title_text, message.text, self.user.email,
+                            [message.recipient_email])
+        if mail.send(fail_silently=False):
+            message.status = Message.SENT
+        else:
+            message.status = Message.NOT_SENT
         message.save()
         return super(MessageCreate, self).form_valid(form)
